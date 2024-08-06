@@ -12,15 +12,17 @@ export function getURLsFromHTML(html, baseURL) {
   const urlArrays = [];
   const dom = new JSDOM(html);
   const links = dom.window.document.querySelectorAll("a");
-  for (const link of links) {
+
+  links.forEach((link, index) => {
     const href = link.getAttribute("href");
     if (href) {
-      const url = new URL(href, baseURL);
-      urlArrays.push(url.href);
-    } else {
-      throw new Error("Link has no href attribute");
-    }
-  }
+        const url = new URL(href, baseURL);
+        urlArrays.push(url.href);
+      } else {
+          console.log(`Link ${link} has no href attribute`);
+        throw new Error("Link has no href attribute");
+      }
+  });
   return urlArrays;
 }
 
